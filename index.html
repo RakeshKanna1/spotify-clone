@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify - Web Player: Music for everyone</title>
+  <meta name="description" content="Spotify is a digital music service that gives you access to millions of songs.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-layout-wrapper">
+    <!-- Top Unified Spotify Header -->
+    <header class="app-top-bar">
+      <div class="top-bar-left">
+        <div class="logo">
+          <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color: #1db954;">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.892-.982-.336.076-.67-.135-.746-.47-.077-.337.135-.67.47-.747 3.856-.88 7.15-.505 9.822 1.13.295.18.387.563.206.862zm1.225-2.72c-.227.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.075-1.182-.413.125-.847-.107-.972-.52-.125-.413.107-.847.52-.972 3.666-1.112 8.232-.575 11.34 1.336.368.226.488.707.26 1.076zm.105-2.81c-3.258-1.934-8.634-2.115-11.747-1.17-.5.15-.1.025-.1.025-.5.15-.75-.15-.9-.65-.15-.5.15-.75.65-.9 3.636-1.103 9.57-.895 13.32 1.332.45.27.6.852.33 1.302-.27.45-.85.6-1.3.33z"/>
+          </svg>
+        </div>
+      </div>
+      
+      <div class="top-bar-center">
+        <a href="#home" class="top-home-btn" id="top-nav-home" title="Home">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3L4 9v11a1 1 0 001 1h5v-6h4v6h5a1 1 0 001-1V9L12 3z"/>
+          </svg>
+        </a>
+        <div class="top-search-bar" id="top-search-container">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="top-search-icon">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="header-search-input" placeholder="What do you want to play?" class="top-search-input">
+          <button class="top-search-browse-btn" title="Browse">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <line x1="9" y1="3" x2="9" y2="21"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="top-bar-right">
+        <button class="btn-premium-badge">Explore Premium</button>
+        <button class="top-install-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
+            <path d="M12 5v14M19 12l-7 7-7-7"/>
+          </svg>
+          Install App
+        </button>
+        <button class="top-bell-btn" title="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </button>
+        <div class="profile-avatar-btn" title="Rakesh Kanna">
+          <div class="avatar-circle">RK</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-grid" id="app-grid-container">
+      <!-- Desktop Left Sidebar (Contains ONLY Your Library) -->
+      <aside class="app-sidebar" id="app-sidebar-element" aria-label="Sidebar Navigation">
+        <!-- Sidebar Card: Library & Playlists -->
+        <div class="sidebar-card bottom-card" style="height: 100%;">
+          <div class="library-header-row">
+            <div class="sidebar-library-btn" id="nav-link-library">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.1a1 1 0 0 1 .5 1l-3 18a1 1 0 0 1-2 .3l3-18a1 1 0 0 1 1.5-.3zM8.5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1z"/>
+              </svg>
+              <span>Your Library</span>
+            </div>
+            
+            <div class="library-header-actions">
+              <button id="sidebar-create-playlist-btn" class="library-create-btn" title="Create playlist or folder">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>Create</span>
+              </button>
+              <button class="library-expand-btn" id="sidebar-toggle-btn" title="Toggle Sidebar size">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Small Library Pill Filters -->
+          <div class="library-pills-row">
+            <button class="library-pill-filter active" id="pill-playlists">Playlists</button>
+            <button class="library-pill-filter" id="pill-artists">Artists</button>
+            <button class="library-pill-filter" id="pill-albums">Albums</button>
+          </div>
+
+          <!-- Search and Sort Row -->
+          <div class="library-search-sort-row">
+            <button class="library-search-mini-btn" title="Search in Your Library">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </button>
+            <button class="library-sort-recents-btn">
+              <span>Recents</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Playlists List (Your Library Rows) -->
+          <nav class="sidebar-playlists-list" id="sidebar-playlists-container" aria-label="Playlists Sub-Navigation">
+            <!-- Liked Songs Playlist (Pinned) -->
+            <a href="#library?tab=liked" class="playlist-sidebar-item" id="sidebar-liked-songs-item">
+              <div class="sidebar-item-thumb" style="background-image: linear-gradient(135deg, #450afd, #c4efd9); display: flex; align-items: center; justify-content: center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <div class="sidebar-item-meta">
+                <span class="sidebar-item-title">Liked Songs</span>
+                <span class="sidebar-item-subtitle" style="display: flex; align-items: center; gap: 4px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#1db954"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                  Playlist • <span id="sidebar-liked-count">3</span> songs
+                </span>
+              </div>
+            </a>
+
+            <!-- Daily Mix (Pinned) -->
+            <a href="#playlist?id=Daily%20Mix" class="playlist-sidebar-item">
+              <img class="sidebar-item-thumb" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=100&q=80" alt="Daily Mix Cover">
+              <div class="sidebar-item-meta">
+                <span class="sidebar-item-title">Daily Mix</span>
+                <span class="sidebar-item-subtitle" style="display: flex; align-items: center; gap: 4px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#1db954"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/></svg>
+                  Playlist • Spotify
+                </span>
+              </div>
+            </a>
+            
+            <a href="#playlist?id=Coding%20Beats" class="playlist-sidebar-item">
+              <img class="sidebar-item-thumb" src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=100&q=80" alt="Coding Beats Cover">
+              <div class="sidebar-item-meta">
+                <span class="sidebar-item-title">Coding Beats</span>
+                <span class="sidebar-item-subtitle">Playlist • Synthwave</span>
+              </div>
+            </a>
+            <a href="#playlist?id=Chill%20Evenings" class="playlist-sidebar-item">
+              <img class="sidebar-item-thumb" src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/4a/d7/38/4ad738d9-6978-ca6b-c2da-500cf0915204/4550758373889_cover.png/150x150bb.jpg" alt="Chill Evenings Cover">
+              <div class="sidebar-item-meta">
+                <span class="sidebar-item-title">Chill Evenings</span>
+                <span class="sidebar-item-subtitle">Playlist • Acoustic</span>
+              </div>
+            </a>
+            <a href="#playlist?id=Focus%20Mode" class="playlist-sidebar-item">
+              <img class="sidebar-item-thumb" src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/66/38/c4/6638c4b9-8e43-f111-97b7-5a1fae0172e2/886447820155.jpg/150x150bb.jpg" alt="Focus Mode Cover">
+              <div class="sidebar-item-meta">
+                <span class="sidebar-item-title">Focus Mode</span>
+                <span class="sidebar-item-subtitle">Playlist • Classical</span>
+              </div>
+            </a>
+            <a href="#playlist?id=Workout%20Energy" class="playlist-sidebar-item">
+              <img class="sidebar-item-thumb" src="https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/dd/5c/e6/dd5ce621-f7d2-f767-7a08-e7a7eaa7870b/00602537526994.rgb.jpg/150x150bb.jpg" alt="Workout Energy Cover">
+              <div class="sidebar-item-meta">
+                <span class="sidebar-item-title">Workout Energy</span>
+                <span class="sidebar-item-subtitle">Playlist • Cardio</span>
+              </div>
+            </a>
+            
+            <!-- Artists round covers in sidebar -->
+            <a href="#artist?name=Anirudh%20Ravichander" class="playlist-sidebar-item">
+              <img class="sidebar-item-thumb" src="https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/4a/62/12/4a6212e5-4f4f-40e1-0bf4-b0a68d067b84/19UMGIM16486.rgb.jpg/150x150bb.jpg" alt="Anirudh Ravichander Profile" style="border-radius: 50%;">
+              <div class="sidebar-item-meta">
+                <span class="sidebar-item-title">Anirudh Ravichander</span>
+                <span class="sidebar-item-subtitle">Artist</span>
+              </div>
+            </a>
+            <a href="#artist?name=A.R.%20Rahman" class="playlist-sidebar-item">
+              <img class="sidebar-item-thumb" src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/0c/33/84/0c33842c-cc31-90a8-b63a-b44c803362a2/00602527265889.rgb.jpg/150x150bb.jpg" alt="A.R. Rahman Profile" style="border-radius: 50%;">
+              <div class="sidebar-item-meta">
+                <span class="sidebar-item-title">A.R. Rahman</span>
+                <span class="sidebar-item-subtitle">Artist</span>
+              </div>
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Mobile Top Header -->
+      <header class="mobile-top-bar" aria-label="Mobile top bar">
+        <div class="logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color: #1db954;">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.892-.982-.336.076-.67-.135-.746-.47-.077-.337.135-.67.47-.747 3.856-.88 7.15-.505 9.822 1.13.295.18.387.563.206.862zm1.225-2.72c-.227.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.075-1.182-.413.125-.847-.107-.972-.52-.125-.413.107-.847.52-.972 3.666-1.112 8.232-.575 11.34 1.336.368.226.488.707.26 1.076zm.105-2.81c-3.258-1.934-8.634-2.115-11.747-1.17-.5.15-.1.025-.1.025-.5.15-.75-.15-.9-.65-.15-.5.15-.75.65-.9 3.636-1.103 9.57-.895 13.32 1.332.45.27.6.852.33 1.302-.27.45-.85.6-1.3.33z"/>
+          </svg>
+          <span>Spotify</span>
+        </div>
+      </header>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav" aria-label="Bottom Navigation">
+        <a href="#home" class="mobile-nav-item active" id="mob-nav-home" aria-label="Home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5z"/></svg>Home</a>
+        <a href="#search" class="mobile-nav-item" id="mob-nav-search" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</a>
+        <a href="#library" class="mobile-nav-item" id="mob-nav-library" aria-label="Library"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Library</a>
+      </nav>
+
+      <!-- Center Viewport Content area (SPA Content Panels) -->
+      <main class="app-content">
+        <!-- Sticky Navigation Header (Spotify Web Client Style) -->
+        <header class="content-header" id="content-header">
+          <div class="header-nav-buttons">
+            <button class="nav-arrow-btn" id="header-back-btn" aria-label="Go Back">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="11 1 4 8 11 15"/>
+              </svg>
+            </button>
+            <button class="nav-arrow-btn" id="header-forward-btn" aria-label="Go Forward">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="5 1 12 8 5 15"/>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="home-top-pills-row" id="header-home-pills" style="margin-bottom: 0; margin-left: 1rem;">
+            <button class="home-top-pill active">All</button>
+            <button class="home-top-pill">Music</button>
+            <button class="home-top-pill">Podcasts</button>
+          </div>
+
+          <nav class="library-tabs" id="header-library-tabs" aria-label="Library Category Filters" style="margin-bottom: 0; margin-left: 1rem; display: none;">
+            <button class="library-tab-btn active" id="library-tab-liked">Liked Songs</button>
+            <button class="library-tab-btn" id="library-tab-playlists">Playlists</button>
+            <button class="library-tab-btn" id="library-tab-albums">Albums</button>
+            <button class="library-tab-btn" id="library-tab-artists">Artists</button>
+          </nav>
+        </header>
+        
+        <!-- 1. HOME VIEW -->
+        <div id="home-view" class="spa-view">
+
+          <h2 id="home-greeting" class="home-greeting-heading">Good morning</h2>
+
+          <!-- 6 Quick Access cards grid -->
+          <section class="quick-grid" aria-label="Quick Access Playlists">
+            <article class="quick-card" data-playlist="Liked Songs">
+              <div class="quick-card-img-wrapper" style="background-image: linear-gradient(135deg, #450afd, #c4efd9); display: flex; align-items: center; justify-content: center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <span class="quick-card-title">Liked Songs</span>
+              <button class="play-hover-btn" aria-label="Play Liked Songs">▶</button>
+            </article>
+
+            <article class="quick-card" data-playlist="Coding Beats">
+              <img class="quick-card-img-src" src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=150&q=80" alt="Coding Beats Cover">
+              <span class="quick-card-title">Coding Beats</span>
+              <button class="play-hover-btn" aria-label="Play Coding Beats">▶</button>
+            </article>
+
+            <article class="quick-card" data-playlist="Chill Mix">
+              <img class="quick-card-img-src" src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/c3/09/a3/c309a3fc-efb5-905a-5eb0-ab19f7e80209/190295847427.jpg/150x150bb.jpg" alt="Chill Mix Cover">
+              <span class="quick-card-title">Chill Mix</span>
+              <button class="play-hover-btn" aria-label="Play Chill Mix">▶</button>
+            </article>
+
+            <article class="quick-card" data-playlist="Workout Energy">
+              <img class="quick-card-img-src" src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/a4/bc/2b/a4bc2b77-cfc4-ad7d-a16b-cf83a216db8a/00602537617322.rgb.jpg/150x150bb.jpg" alt="Workout Energy Cover">
+              <span class="quick-card-title">Workout Energy</span>
+              <button class="play-hover-btn" aria-label="Play Workout Energy">▶</button>
+            </article>
+
+            <article class="quick-card" data-playlist="Tamil Hits">
+              <img class="quick-card-img-src" src="https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/1e/8a/0a/1e8a0ad1-3eb2-19e4-4ff5-f67b4ec8b276/cover.jpg/150x150bb.jpg" alt="Tamil Hits Cover">
+              <span class="quick-card-title">Tamil Hits</span>
+              <button class="play-hover-btn" aria-label="Play Tamil Hits">▶</button>
+            </article>
+
+            <article class="quick-card" data-playlist="Focus Mode">
+              <img class="quick-card-img-src" src="https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/37/2c/80/372c8033-b6d4-d8bc-70e6-b9dc696ad998/5052442003277.jpg/150x150bb.jpg" alt="Focus Mode Cover">
+              <span class="quick-card-title">Focus Mode</span>
+              <button class="play-hover-btn" aria-label="Play Focus Mode">▶</button>
+            </article>
+          </section>
+
+          <!-- Recommended Grid -->
+          <section aria-labelledby="recommended-title">
+            <div class="section-header-row">
+              <h2 id="recommended-title" class="section-title">Pre-save upcoming releases</h2>
+              <a href="#search" class="section-show-all">Show all</a>
+            </div>
+            <div class="music-grid recommended-grid"></div>
+          </section>
+
+                    <!-- Recommended Albums -->
+          <section aria-labelledby="recommended-albums-title">
+            <div class="section-header-row">
+              <h2 id="recommended-albums-title" class="section-title">Recommended Albums</h2>
+              <a href="#search" class="section-show-all">Show all</a>
+            </div>
+            <div class="music-grid">
+              <article class="music-card" data-playlist="Jailer">
+                <div class="music-card-img-wrapper">
+                  <img class="music-card-img" src="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/31/7c/09/317c09c3-f739-e348-884e-56f8aa012a04/197189667435.jpg/300x300bb.jpg" alt="Jailer">
+                  <button class="play-hover-btn" aria-label="Play Jailer">▶</button>
+                </div>
+                <div class="music-card-title">Jailer</div>
+                <div class="music-card-artist">Anirudh Ravichander</div>
+              </article>
+              <article class="music-card" data-playlist="Bombay">
+                <div class="music-card-img-wrapper">
+                  <img class="music-card-img" src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/6f/20/05/6f20058c-035e-579b-c811-b4551b94789b/197338031865.jpg/300x300bb.jpg" alt="Bombay">
+                  <button class="play-hover-btn" aria-label="Play Bombay">▶</button>
+                </div>
+                <div class="music-card-title">Bombay</div>
+                <div class="music-card-artist">A.R. Rahman</div>
+              </article>
+            </div>
+          </section>
+
+                    <!-- Top Artists -->
+          <section aria-labelledby="top-artists-title">
+            <div class="section-header-row">
+              <h2 id="top-artists-title" class="section-title">Top Artists</h2>
+              <a href="#search" class="section-show-all">Show all</a>
+            </div>
+            <div class="music-grid">
+              <article class="music-card" data-artist-profile="Anirudh Ravichander">
+                <div class="music-card-img-wrapper" style="border-radius: 50%;">
+                  <img class="music-card-img" src="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/31/7c/09/317c09c3-f739-e348-884e-56f8aa012a04/197189667435.jpg/300x300bb.jpg" alt="Anirudh Ravichander" style="border-radius: 50%;">
+                  <button class="play-hover-btn" aria-label="Play Anirudh Ravichander">▶</button>
+                </div>
+                <div class="music-card-title" style="text-align: center;">Anirudh Ravichander</div>
+                <div class="music-card-artist" style="text-align: center;">Artist</div>
+              </article>
+              <article class="music-card" data-artist-profile="A.R. Rahman">
+                <div class="music-card-img-wrapper" style="border-radius: 50%;">
+                  <img class="music-card-img" src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/6f/20/05/6f20058c-035e-579b-c811-b4551b94789b/197338031865.jpg/300x300bb.jpg" alt="A.R. Rahman" style="border-radius: 50%;">
+                  <button class="play-hover-btn" aria-label="Play A.R. Rahman">▶</button>
+                </div>
+                <div class="music-card-title" style="text-align: center;">A.R. Rahman</div>
+                <div class="music-card-artist" style="text-align: center;">Artist</div>
+              </article>
+            </div>
+          </section>
+        </main>
+    </div>
+
+    <!-- Bottom fixed Music Player -->
+      <footer class="app-player" aria-label="Music Player Control Bar">
+        <!-- Left: Active Song details metadata -->
+        <div class="active-song-details">
+          <div class="active-song-img-container" id="player-song-img-container">
+            <img src="" alt="Active Song Cover" class="active-song-img" id="player-song-img">
+            <div class="disc-center-hole"></div>
+          </div>
+          <div class="active-song-meta">
+            <span class="active-song-title" id="player-song-title">Song Title</span>
+            <span class="active-song-artist" id="player-song-artist">Artist Name</span>
+          </div>
+          <button class="btn-extra btn-player-like" id="player-heart-btn" aria-label="Add to liked songs list">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            </svg>
+          </button>
+          <!-- CSS Rhythm Visualizer -->
+          <div class="visualizer-container" id="player-visualizer" aria-label="Audio Visualizer">
+            <div class="visualizer-bar"></div>
+            <div class="visualizer-bar"></div>
+            <div class="visualizer-bar"></div>
+            <div class="visualizer-bar"></div>
+          </div>
+        </div>
+
+        <!-- Center: Controls buttons & seek slider bar -->
+        <div class="player-controls-container">
+          <div class="controls-row">
+            <button class="btn-utility" id="player-shuffle-btn" aria-label="Shuffle Queue">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/>
+                <path d="m18 2 4 4-4 4"/>
+                <path d="M2 6h1.9c1.2 0 2.3.6 3 1.7l1.1 1.6"/>
+                <path d="m15.4 12.8 1.2 1.7c.8 1.1 2 1.7 3.2 1.7H22"/>
+                <path d="m18 14 4 4-4 4"/>
+              </svg>
+            </button>
+            
+            <button class="btn-control" id="player-prev-btn" aria-label="Previous Song">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="19 20 9 12 19 4 19 20" fill="currentColor"/>
+                <line x1="5" y1="19" x2="5" y2="5"/>
+              </svg>
+            </button>
+            
+            <button class="btn-control btn-control-play" id="player-play-btn" aria-label="Play Song">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="play-svg-indicator">
+                <polygon points="6 3 20 12 6 21 6 3"/>
+              </svg>
+            </button>
+            
+            <button class="btn-control" id="player-next-btn" aria-label="Next Song">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 4 15 12 5 20 5 4" fill="currentColor"/>
+                <line x1="19" y1="5" x2="19" y2="19"/>
+              </svg>
+            </button>
+            
+            <button class="btn-utility" id="player-repeat-btn" aria-label="Repeat Current Song">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m17 2 4 4-4 4"/>
+                <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
+                <path d="m7 22-4-4 4-4"/>
+                <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
+              </svg>
+            </button>
+          </div>
+          <div class="playback-seek-row">
+            <span class="seek-time" id="player-time-elapsed">0:00</span>
+            <!-- Slider progress bar -->
+            <div class="seek-slider-container" id="player-seek-slider" aria-label="Seek playback position">
+              <div class="seek-slider-progress" id="player-seek-progress"></div>
+            </div>
+            <span class="seek-time" id="player-time-total">3:30</span>
+          </div>
+        </div>
+
+        <!-- Right: Extra Volume sliders & Side Panels triggers -->
+        <div class="extra-controls-row">
+          <button class="btn-extra" id="player-lyrics-btn" aria-label="Show lyrics panel" style="padding: 4px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+            </svg>
+          </button>
+          
+          <button class="btn-extra" id="player-queue-btn" aria-label="Show queue panel" style="padding: 4px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="6" x2="20" y2="6"/>
+              <line x1="4" y1="12" x2="14" y2="12"/>
+              <line x1="4" y1="18" x2="18" y2="18"/>
+              <circle cx="18" cy="12" r="2"/>
+            </svg>
+          </button>
+          
+          <div class="volume-bar-container">
+            <button id="player-mute-btn" style="color:var(--text-secondary); display:flex; align-items:center;" aria-label="Mute Volume">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </button>
+            <div class="volume-slider" id="player-volume-slider" aria-label="Volume level">
+              <div class="volume-slider-progress" id="player-volume-progress"></div>
+            </div>
+          </div>
+        </div>
+      </footer>
+  </div>
+
+  <!-- Lyrics Drawer Panel -->
+  <div id="lyrics-panel" class="side-panel">
+    <div class="side-panel-header">
+      <h3>Lyrics</h3>
+      <button class="close-panel-btn" id="close-lyrics-btn">✕</button>
+    </div>
+    <div class="side-panel-content lyrics-body" id="lyrics-content"></div>
+  </div>
+
+  <!-- Queue Drawer Panel -->
+  <div id="queue-panel" class="side-panel">
+    <div class="side-panel-header">
+      <h3>Play Queue</h3>
+      <button class="close-panel-btn" id="close-queue-btn">✕</button>
+    </div>
+    <div class="side-panel-content queue-body" id="queue-content"></div>
+  </div>
+
+  <!-- Toast Notification Wrapper -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Unified Script -->
+  <script src="script.js?v=2.0"></script>
+</body>
+</html>
