@@ -1,3 +1,48 @@
+
+// ==========================================
+// Custom Playlists Persistence
+// ==========================================
+function getStoredCustomPlaylists() {
+  try {
+    const raw = localStorage.getItem('beatflow_custom_playlists');
+    return raw ? JSON.parse(raw) : { "My Favorites": [1, 26, 30, 31] };
+  } catch (e) {
+    return { "My Favorites": [1, 26, 30, 31] };
+  }
+}
+
+function saveStoredCustomPlaylists(playlists) {
+  try {
+    localStorage.setItem('beatflow_custom_playlists', JSON.stringify(playlists));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function renderSidebarCustomPlaylists() {
+  const container = document.getElementById('sidebar-playlists-container');
+  if (!container) return;
+
+  container.querySelectorAll('.playlist-custom-item').forEach(el => el.remove());
+
+  const customPlaylists = getStoredCustomPlaylists();
+  Object.keys(customPlaylists).forEach((plName, index) => {
+    const songCount = (customPlaylists[plName] || []).length;
+    const item = document.createElement('a');
+    item.href = `#playlist?id=${encodeURIComponent(plName)}`;
+    item.className = 'playlist-sidebar-item playlist-custom-item';
+    const hue = (index * 67 + 140) % 360;
+    item.innerHTML = `
+      <div class="sidebar-item-thumb" style="background-color: hsl(${hue}, 50%, 30%); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.75rem;">♪</div>
+      <div class="sidebar-item-meta">
+        <span class="sidebar-item-title">${plName}</span>
+        <span class="sidebar-item-subtitle">Playlist • ${songCount} ${songCount === 1 ? 'song' : 'songs'}</span>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
 // ==========================================
 // Spotify 20 Dummy Songs Database
 // ==========================================
@@ -11,7 +56,16 @@ const SONGS_DATA = [
     "duration": "3:20",
     "category": "Pop",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/a6/6e/bf/a66ebf79-5008-8948-b352-a790fc87446b/19UM1IM04638.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/17/b4/8f/17b48f9a-0b93-6bb8-fe1d-3a16623c2cfb/mzaf_9560252727299052414.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/17/b4/8f/17b48f9a-0b93-6bb8-fe1d-3a16623c2cfb/mzaf_9560252727299052414.plus.aac.p.m4a",
+    "tags": [
+      "pop",
+      "synthpop",
+      "80s",
+      "dance",
+      "night",
+      "charts",
+      "retro"
+    ]
   },
   {
     "id": 2,
@@ -21,7 +75,15 @@ const SONGS_DATA = [
     "duration": "3:53",
     "category": "Pop",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/15/e6/e8/15e6e8a4-4190-6a8b-86c3-ab4a51b88288/190295851286.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/44/c7/4f/44c74f0d-72dc-6143-d4d0-ba14d661ca0d/mzaf_9566898362556366703.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/44/c7/4f/44c74f0d-72dc-6143-d4d0-ba14d661ca0d/mzaf_9566898362556366703.plus.aac.p.m4a",
+    "tags": [
+      "pop",
+      "acoustic",
+      "dance",
+      "upbeat",
+      "summer",
+      "charts"
+    ]
   },
   {
     "id": 3,
@@ -31,7 +93,15 @@ const SONGS_DATA = [
     "duration": "3:14",
     "category": "Pop",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/1a/37/d1/1a37d1b1-8508-54f2-f541-bf4e437dda76/19UMGIM05028.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/c3/87/1f/c3871f7e-3260-d615-1c66-5fdca2c3a48f/mzaf_10721331211699880949.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/c3/87/1f/c3871f7e-3260-d615-1c66-5fdca2c3a48f/mzaf_10721331211699880949.plus.aac.p.m4a",
+    "tags": [
+      "pop",
+      "dark pop",
+      "bass",
+      "alternative",
+      "catchy",
+      "billie"
+    ]
   },
   {
     "id": 4,
@@ -41,7 +111,15 @@ const SONGS_DATA = [
     "duration": "3:51",
     "category": "Pop",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a7/98/d8/a798d867-344d-2bf2-fbfe-d2d1412dcef8/14UMDIM03793.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/79/55/b1/7955b10c-6cb6-462a-861c-8e5cbcacfb76/mzaf_3395570742482345989.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/79/55/b1/7955b10c-6cb6-462a-861c-8e5cbcacfb76/mzaf_3395570742482345989.plus.aac.p.m4a",
+    "tags": [
+      "pop",
+      "1989",
+      "taylor swift",
+      "charts",
+      "radio",
+      "love"
+    ]
   },
   {
     "id": 5,
@@ -51,7 +129,16 @@ const SONGS_DATA = [
     "duration": "3:24",
     "category": "Rock",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/7b/06/ef/7b06ef0d-9860-2ff6-69be-b847fa274883/17UMGIM16486.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f0/cb/09/f0cb0958-3721-a53c-a968-081498b8be88/mzaf_4726593581729091931.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f0/cb/09/f0cb0958-3721-a53c-a968-081498b8be88/mzaf_4726593581729091931.plus.aac.p.m4a",
+    "tags": [
+      "rock",
+      "hype",
+      "workout",
+      "gym",
+      "energy",
+      "drums",
+      "anthems"
+    ]
   },
   {
     "id": 6,
@@ -61,7 +148,15 @@ const SONGS_DATA = [
     "duration": "3:36",
     "category": "Rock",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/e5/a0/0b/e5a00b8e-e3cf-05be-a83d-3d445af0f124/603497850845.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f7/a9/e4/f7a9e4d6-848c-3e3e-48f8-b3d45efb31bd/mzaf_15077271424759082855.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/f7/a9/e4/f7a9e4d6-848c-3e3e-48f8-b3d45efb31bd/mzaf_15077271424759082855.plus.aac.p.m4a",
+    "tags": [
+      "rock",
+      "nu-metal",
+      "linkin park",
+      "nostalgia",
+      "2000s",
+      "hype"
+    ]
   },
   {
     "id": 7,
@@ -71,7 +166,15 @@ const SONGS_DATA = [
     "duration": "3:35",
     "category": "Rock",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/10/72/5c/10725c86-13d8-306d-74d3-e793e2b20fb9/00602527265889.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/58/c2/f7/58c2f7b8-6a58-f9b0-9b48-18e47bf0dfaf/mzaf_5813958933391807759.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/58/c2/f7/58c2f7b8-6a58-f9b0-9b48-18e47bf0dfaf/mzaf_5813958933391807759.plus.aac.p.m4a",
+    "tags": [
+      "rock",
+      "classic rock",
+      "queen",
+      "bass",
+      "legendary",
+      "retro"
+    ]
   },
   {
     "id": 8,
@@ -81,7 +184,16 @@ const SONGS_DATA = [
     "duration": "5:26",
     "category": "Hip-Hop",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/05/cf/8d/05cf8df0-1090-ffb8-ba90-aa7312108502/00602537169474.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/df/db/5b/dfdb5bc1-0bb3-c603-516d-3575607b32c6/mzaf_2080838118047915668.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/df/db/5b/dfdb5bc1-0bb3-c603-516d-3575607b32c6/mzaf_2080838118047915668.plus.aac.p.m4a",
+    "tags": [
+      "hip-hop",
+      "rap",
+      "eminem",
+      "hype",
+      "workout",
+      "gym",
+      "8 mile"
+    ]
   },
   {
     "id": 9,
@@ -91,7 +203,15 @@ const SONGS_DATA = [
     "duration": "5:12",
     "category": "Hip-Hop",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/f5/ec/3b/f5ec3bc0-b5bf-73c3-6b71-11ef88cbfe02/886447285640.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/31/b0/02/31b002c9-6330-9b7e-f63b-63a233486127/mzaf_4723048995392038753.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/31/b0/02/31b002c9-6330-9b7e-f63b-63a233486127/mzaf_4723048995392038753.plus.aac.p.m4a",
+    "tags": [
+      "hip-hop",
+      "travis scott",
+      "astroworld",
+      "trap",
+      "bass",
+      "party"
+    ]
   },
   {
     "id": 10,
@@ -101,7 +221,15 @@ const SONGS_DATA = [
     "duration": "3:18",
     "category": "Hip-Hop",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/bd/f6/05/bdf605e5-7a6c-48b4-e406-03c004d4400e/18UMGIM08253.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview128/v4/80/7e/17/807e174b-c744-cbdf-f44a-ad1b4f49495b/mzaf_8497672227181057404.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview128/v4/80/7e/17/807e174b-c744-cbdf-f44a-ad1b4f49495b/mzaf_8497672227181057404.plus.aac.p.m4a",
+    "tags": [
+      "hip-hop",
+      "drake",
+      "rap",
+      "chill",
+      "charts",
+      "vibes"
+    ]
   },
   {
     "id": 11,
@@ -111,7 +239,15 @@ const SONGS_DATA = [
     "duration": "2:50",
     "category": "Classical",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/36/eb/95/36eb95bc-a3f2-a27b-a316-f6d3910c66db/00602537822454.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/c6/29/5a/c6295a02-53b5-31b6-735c-c764e5904d60/mzaf_2615456455246736417.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/c6/29/5a/c6295a02-53b5-31b6-735c-c764e5904d60/mzaf_2615456455246736417.plus.aac.p.m4a",
+    "tags": [
+      "classical",
+      "piano",
+      "beethoven",
+      "study",
+      "focus",
+      "instrumental"
+    ]
   },
   {
     "id": 12,
@@ -121,7 +257,15 @@ const SONGS_DATA = [
     "duration": "3:30",
     "category": "Classical",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/c0/83/87/c0838706-e7e6-8c0c-cf23-5e76a6d68bbf/00602527263564.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview118/v4/f4/19/22/f41922c2-901d-5561-12c6-d922a7f805a5/mzaf_15783262615017165181.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview118/v4/f4/19/22/f41922c2-901d-5561-12c6-d922a7f805a5/mzaf_15783262615017165181.plus.aac.p.m4a",
+    "tags": [
+      "classical",
+      "vivaldi",
+      "violin",
+      "orchestra",
+      "focus",
+      "calm"
+    ]
   },
   {
     "id": 13,
@@ -131,7 +275,16 @@ const SONGS_DATA = [
     "duration": "4:39",
     "category": "Tamil",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/e9/19/b9/e919b921-d5a8-9e9a-8508-3551da375aee/196626458629.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/0b/83/a7/0b83a7a8-4911-221c-4fa1-ecd4ab7e7750/mzaf_4636221010938715732.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/0b/83/a7/0b83a7a8-4911-221c-4fa1-ecd4ab7e7750/mzaf_4636221010938715732.plus.aac.p.m4a",
+    "tags": [
+      "tamil",
+      "anirudh",
+      "beast",
+      "thalapathy",
+      "dance",
+      "arabic kuthu",
+      "party"
+    ]
   },
   {
     "id": 14,
@@ -141,7 +294,16 @@ const SONGS_DATA = [
     "duration": "3:34",
     "category": "Tamil",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/91/ac/e9/91ace9d7-879c-7bf7-6333-c3d5d1049f3f/8903431853622_cover.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/ce/2e/07/ce2e076d-2cd5-a14c-78df-ce90efc441b7/mzaf_13021833517357944658.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/ce/2e/07/ce2e076d-2cd5-a14c-78df-ce90efc441b7/mzaf_13021833517357944658.plus.aac.p.m4a",
+    "tags": [
+      "tamil",
+      "rrr",
+      "naatu naatu",
+      "dance",
+      "energy",
+      "fast",
+      "oscar"
+    ]
   },
   {
     "id": 15,
@@ -151,7 +313,15 @@ const SONGS_DATA = [
     "duration": "4:42",
     "category": "Tamil",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/61/98/08/619808d3-4505-a210-e807-3d7b5d60d7ae/886448214496.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/75/b5/69/75b56906-407f-1664-5711-caf51a8f8bb3/mzaf_1449302892680331174.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/75/b5/69/75b56906-407f-1664-5711-caf51a8f8bb3/mzaf_1449302892680331174.plus.aac.p.m4a",
+    "tags": [
+      "tamil",
+      "sid sriram",
+      "love",
+      "melody",
+      "romantic",
+      "chill"
+    ]
   },
   {
     "id": 16,
@@ -161,7 +331,15 @@ const SONGS_DATA = [
     "duration": "4:28",
     "category": "Hindi",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/9f/13/ca/9f13ca3b-e533-03e0-f19a-f0aaa774581d/196589311191.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/38/4c/5c/384c5c8f-3ff8-e457-b2f7-3158ce108649/mzaf_12389299033886433185.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/38/4c/5c/384c5c8f-3ff8-e457-b2f7-3158ce108649/mzaf_12389299033886433185.plus.aac.p.m4a",
+    "tags": [
+      "hindi",
+      "bollywood",
+      "arijit singh",
+      "kesariya",
+      "romantic",
+      "love"
+    ]
   },
   {
     "id": 17,
@@ -171,7 +349,15 @@ const SONGS_DATA = [
     "duration": "4:24",
     "category": "Hindi",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/2e/0b/c0/2e0bc070-112f-a827-6ad8-6bc64f7caaff/840214460180.png/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/09/51/0d/09510dea-6579-5cd0-b13b-696abc2c520b/mzaf_10718921821360997069.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/09/51/0d/09510dea-6579-5cd0-b13b-696abc2c520b/mzaf_10718921821360997069.plus.aac.p.m4a",
+    "tags": [
+      "hindi",
+      "bollywood",
+      "arijit singh",
+      "bhediya",
+      "romantic",
+      "acoustic"
+    ]
   },
   {
     "id": 18,
@@ -181,7 +367,15 @@ const SONGS_DATA = [
     "duration": "8:00",
     "category": "Focus",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c3/3a/d6/c33ad6a3-ec91-62e4-0912-d4a873d4fed0/cover.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/95/84/05/95840512-b41d-68e4-e7ff-c8987c9bcceb/mzaf_8934420937865408216.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/95/84/05/95840512-b41d-68e4-e7ff-c8987c9bcceb/mzaf_8934420937865408216.plus.aac.p.m4a",
+    "tags": [
+      "focus",
+      "ambient",
+      "meditation",
+      "sleep",
+      "calm",
+      "relax"
+    ]
   },
   {
     "id": 19,
@@ -191,7 +385,15 @@ const SONGS_DATA = [
     "duration": "5:05",
     "category": "Focus",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music/5f/f2/dc/mzi.cjpwuohz.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/c3/68/35/c36835b6-9cb3-a20a-088b-6c7d39e39636/mzaf_484141242926915999.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/c3/68/35/c36835b6-9cb3-a20a-088b-6c7d39e39636/mzaf_484141242926915999.plus.aac.p.m4a",
+    "tags": [
+      "focus",
+      "classical",
+      "debussy",
+      "piano",
+      "night",
+      "relax"
+    ]
   },
   {
     "id": 20,
@@ -201,7 +403,15 @@ const SONGS_DATA = [
     "duration": "4:57",
     "category": "Workout",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/dd/5c/e6/dd5ce621-f7d2-f767-7a08-e7a7eaa7870b/00602537526994.rgb.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/b4/6c/d2/b46cd2fc-0439-2248-6964-179c076476b5/mzaf_8281165515046215092.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/b4/6c/d2/b46cd2fc-0439-2248-6964-179c076476b5/mzaf_8281165515046215092.plus.aac.p.m4a",
+    "tags": [
+      "workout",
+      "eminem",
+      "gym",
+      "motivation",
+      "rap",
+      "energy"
+    ]
   },
   {
     "id": 21,
@@ -211,7 +421,16 @@ const SONGS_DATA = [
     "duration": "3:27",
     "category": "Tamil",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/31/7c/09/317c09c3-f739-e348-884e-56f8aa012a04/197189667435.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/84/83/db/8483db5e-190a-7b50-0c84-f499cf0c02b3/mzaf_16480158455239910875.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/84/83/db/8483db5e-190a-7b50-0c84-f499cf0c02b3/mzaf_16480158455239910875.plus.aac.p.m4a",
+    "tags": [
+      "tamil",
+      "anirudh",
+      "jailer",
+      "rajinikanth",
+      "hukum",
+      "mass",
+      "bass"
+    ]
   },
   {
     "id": 22,
@@ -221,7 +440,15 @@ const SONGS_DATA = [
     "duration": "4:59",
     "category": "Tamil",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/ea/77/05/ea7705e6-9cbc-2203-286a-0e2d19607500/196006555917.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/fd/17/f8/fd17f801-3c7a-26ca-59bb-4fdaa7037cbe/mzaf_11677546305452747754.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/fd/17/f8/fd17f801-3c7a-26ca-59bb-4fdaa7037cbe/mzaf_11677546305452747754.plus.aac.p.m4a",
+    "tags": [
+      "tamil",
+      "harris jayaraj",
+      "vaseegara",
+      "classic",
+      "melody",
+      "romantic"
+    ]
   },
   {
     "id": 23,
@@ -231,7 +458,15 @@ const SONGS_DATA = [
     "duration": "5:55",
     "category": "Tamil",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/6f/20/05/6f20058c-035e-579b-c811-b4551b94789b/197338031865.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/7c/03/fb/7c03fb15-2a62-42a9-5d6c-cd6196f01a31/mzaf_18268845108248593640.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/7c/03/fb/7c03fb15-2a62-42a9-5d6c-cd6196f01a31/mzaf_18268845108248593640.plus.aac.p.m4a",
+    "tags": [
+      "tamil",
+      "ar rahman",
+      "bombay",
+      "kannalane",
+      "classic",
+      "melody"
+    ]
   },
   {
     "id": 24,
@@ -241,7 +476,16 @@ const SONGS_DATA = [
     "duration": "4:41",
     "category": "Tamil",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/09/0b/4f/090b4ffb-f4eb-f975-ae79-ce5446eeabc8/718598836276.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/91/17/90/911790e5-27e3-6021-da30-bddf59576e3d/mzaf_3831305118076812899.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/91/17/90/911790e5-27e3-6021-da30-bddf59576e3d/mzaf_3831305118076812899.plus.aac.p.m4a",
+    "tags": [
+      "tamil",
+      "dhanush",
+      "dhee",
+      "rowdy baby",
+      "dance",
+      "viral",
+      "party"
+    ]
   },
   {
     "id": 25,
@@ -251,7 +495,269 @@ const SONGS_DATA = [
     "duration": "5:00",
     "category": "Tamil",
     "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/a3/f2/dc/a3f2dc29-fc54-07bb-8f9c-2a3936d21a5d/886448363347.jpg/600x600bb.jpg",
-    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ae/12/48/ae12482e-d62a-9013-bdbc-0f0f8f638357/mzaf_5940478263765495268.plus.aac.p.m4a"
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ae/12/48/ae12482e-d62a-9013-bdbc-0f0f8f638357/mzaf_5940478263765495268.plus.aac.p.m4a",
+    "tags": [
+      "tamil",
+      "vijay",
+      "anirudh",
+      "master",
+      "kutti story",
+      "vibes",
+      "chill"
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Starboy (feat. Daft Punk)",
+    "artist": "The Weeknd",
+    "album": "Starboy",
+    "duration": "3:50",
+    "category": "Pop",
+    "tags": [
+      "pop",
+      "r&b",
+      "daft punk",
+      "synth",
+      "party",
+      "night",
+      "hype",
+      "weeknd"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/b5/92/bb/b592bb72-52e3-e756-9b26-9f56d08f47ab/16UMGIM67864.rgb.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/11/71/d6/1171d6ad-3c96-e027-2af6-58028426588c/mzaf_15137631797407745471.plus.aac.p.m4a"
+  },
+  {
+    "id": 27,
+    "title": "Levitating",
+    "artist": "Dua Lipa",
+    "album": "Future Nostalgia",
+    "duration": "3:23",
+    "category": "Pop",
+    "tags": [
+      "pop",
+      "dance",
+      "disco",
+      "upbeat",
+      "workout",
+      "party",
+      "summer"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/6c/11/d6/6c11d681-aa3a-d59e-4c2e-f77e181026ab/190295092665.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/59/dc/4d/59dc4dda-93ff-8f1c-c536-f005f6ea6af5/mzaf_3066686759813252385.plus.aac.p.m4a"
+  },
+  {
+    "id": 28,
+    "title": "Sunflower",
+    "artist": "Post Malone & Swae Lee",
+    "album": "Spider-Man: Into the Spider-Verse",
+    "duration": "2:38",
+    "category": "Hip-Hop",
+    "tags": [
+      "spiderman",
+      "chill",
+      "hip-hop",
+      "vibes",
+      "summer",
+      "melodic",
+      "lofi"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4b/30/2c/4b302cb6-7a14-5464-4e97-0577e9d0be49/18UMGIM82277.rgb.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/98/f0/d6/98f0d67e-f8bf-762d-cac7-1c6b3b6b35dd/mzaf_4543283896248560946.plus.aac.p.m4a"
+  },
+  {
+    "id": 29,
+    "title": "The Humma Song",
+    "artist": "A.R. Rahman & Badshah",
+    "album": "OK Jaanu",
+    "duration": "2:59",
+    "category": "Hindi",
+    "tags": [
+      "bollywood",
+      "hindi",
+      "ar rahman",
+      "dance",
+      "remix",
+      "party",
+      "bass"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b0/f7/81/b0f78164-e057-e185-da9d-ea90f7251345/886446309835.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/70/0b/40/700b40b3-5738-fd92-d23b-de20559f0f13/mzaf_15442463782285770616.plus.aac.p.m4a"
+  },
+  {
+    "id": 30,
+    "title": "Vaathi Coming",
+    "artist": "Anirudh Ravichander",
+    "album": "Master (Original Motion Picture Soundtrack)",
+    "duration": "3:48",
+    "category": "Tamil",
+    "tags": [
+      "tamil",
+      "master",
+      "thalapathy",
+      "vijay",
+      "anirudh",
+      "mass",
+      "dance",
+      "energy"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/a3/f2/dc/a3f2dc29-fc54-07bb-8f9c-2a3936d21a5d/886448363347.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/d7/72/96/d77296ea-677d-45f9-4267-996bbc6801c8/mzaf_2392699048273414940.plus.aac.p.m4a"
+  },
+  {
+    "id": 31,
+    "title": "Enna Sona",
+    "artist": "A.R. Rahman & Arijit Singh",
+    "album": "OK Jaanu",
+    "duration": "3:33",
+    "category": "Hindi",
+    "tags": [
+      "hindi",
+      "romantic",
+      "arijit singh",
+      "ar rahman",
+      "chill",
+      "love",
+      "acoustic"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b0/f7/81/b0f78164-e057-e185-da9d-ea90f7251345/886446309835.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/5b/b6/d7/5bb6d78f-1bba-c0a9-0731-d3286ed06914/mzaf_1092273590896407309.plus.aac.p.m4a"
+  },
+  {
+    "id": 32,
+    "title": "As It Was",
+    "artist": "Harry Styles",
+    "album": "Harry's House",
+    "duration": "2:47",
+    "category": "Pop",
+    "tags": [
+      "pop",
+      "indie",
+      "charts",
+      "synth",
+      "nostalgia",
+      "happy",
+      "chill"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/2a/19/fb/2a19fb85-2f70-9e44-f2a9-82abe679b88e/886449990061.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/67/10/16/67101606-3869-ca44-6c03-e13d6322cb51/mzaf_1135399237022217274.plus.aac.p.m4a"
+  },
+  {
+    "id": 33,
+    "title": "INDUSTRY BABY",
+    "artist": "Lil Nas X & Jack Harlow",
+    "album": "INDUSTRY BABY - Single",
+    "duration": "3:32",
+    "category": "Hip-Hop",
+    "tags": [
+      "hip-hop",
+      "rap",
+      "horns",
+      "gym",
+      "workout",
+      "hype",
+      "energy"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/f7/16/67/f7166746-6299-5e54-8c7c-9535e941a53e/886449403929.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/51/97/7a/51977a71-448a-202a-5e60-756d5dcb6eeb/mzaf_194387576127428058.plus.aac.p.m4a"
+  },
+  {
+    "id": 34,
+    "title": "Badass",
+    "artist": "Anirudh Ravichander",
+    "album": "Leo (Original Motion Picture Soundtrack)",
+    "duration": "3:49",
+    "category": "Tamil",
+    "tags": [
+      "tamil",
+      "leo",
+      "vijay",
+      "anirudh",
+      "bass",
+      "rock",
+      "mass",
+      "workout",
+      "hype"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/13/a8/70/13a87001-28ba-1bc7-0ca6-52cf10dd6f52/196871556415.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/6c/a2/17/6ca2178b-46ab-9d33-f84c-4c59bf53c73d/mzaf_16544885937595911593.plus.aac.p.m4a"
+  },
+  {
+    "id": 35,
+    "title": "Illuminati (From \"Aavesham\")",
+    "artist": "Sushin Shyam & Dabzee",
+    "album": "Illuminati - Single",
+    "duration": "3:32",
+    "category": "Indian",
+    "tags": [
+      "aavesham",
+      "fahadh",
+      "malayalam",
+      "viral",
+      "reels",
+      "trending",
+      "party",
+      "rap"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/88/4e/29/884e290c-29ed-25d5-7b25-243b89097220/cover.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/43/a0/da/43a0daa2-504d-6b7c-c63a-0c8864608a6d/mzaf_7754996064757215177.plus.aac.p.m4a"
+  },
+  {
+    "id": 36,
+    "title": "Tum Hi Ho",
+    "artist": "Arijit Singh",
+    "album": "Aashiqui 2",
+    "duration": "4:21",
+    "category": "Hindi",
+    "tags": [
+      "hindi",
+      "romantic",
+      "arijit singh",
+      "aashiqui 2",
+      "love",
+      "sad",
+      "soul",
+      "bollywood"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/bb/23/ee/bb23eeed-0c35-4f1d-2b11-485622777ae4/8902894353007_cover.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/3a/8c/9b/3a8c9b0b-2def-750a-f615-1555bf941edf/mzaf_17229496441442805917.plus.aac.p.m4a"
+  },
+  {
+    "id": 37,
+    "title": "Espresso",
+    "artist": "Sabrina Carpenter",
+    "album": "Short n' Sweet",
+    "duration": "2:55",
+    "category": "Pop",
+    "tags": [
+      "pop",
+      "viral",
+      "summer",
+      "dance",
+      "trending",
+      "catchy",
+      "charts"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a1/1c/ca/a11ccab6-7d4c-e041-d028-998bcebeb709/24UMGIM61704.rgb.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/99/da/ff/99daffce-cdde-59c6-5ae0-7f922ce411a8/mzaf_5621292401829922816.plus.aac.p.m4a"
+  },
+  {
+    "id": 38,
+    "title": "Mockingbird",
+    "artist": "Eminem",
+    "album": "Curtain Call: The Hits",
+    "duration": "4:10",
+    "category": "Hip-Hop",
+    "tags": [
+      "hip-hop",
+      "rap",
+      "eminem",
+      "emotional",
+      "nostalgia",
+      "classic",
+      "chill"
+    ],
+    "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/27/79/d5/2779d529-ff10-c15d-1c50-08cd46dd1237/06UMGIM17625.rgb.jpg/600x600bb.jpg",
+    "audio": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b3/c5/39/b3c5394b-cf7a-7114-d938-943c93374fce/mzaf_8824293284590733612.plus.aac.p.m4a"
   }
 ];
 
@@ -830,32 +1336,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // Your Library Create Playlist Button Interactivity
   const createPlBtn = document.getElementById('sidebar-create-playlist-btn');
   if (createPlBtn) {
-    let customPlaylistCount = 0;
+    renderSidebarCustomPlaylists();
     createPlBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
       
-      customPlaylistCount++;
-      const plName = `My Playlist #${customPlaylistCount}`;
-      
-      const container = document.getElementById('sidebar-playlists-container');
-      if (container) {
-        const item = document.createElement('a');
-        item.href = `#playlist?id=${encodeURIComponent(plName)}`;
-        item.className = 'playlist-sidebar-item';
-        
-        const hue = Math.floor(Math.random() * 360);
-        
-        item.innerHTML = `
-          <div class="sidebar-item-thumb" style="background-color: hsl(${hue}, 40%, 35%);">MP</div>
-          <div class="sidebar-item-meta">
-            <span class="sidebar-item-title">${plName}</span>
-            <span class="sidebar-item-subtitle">Playlist • Custom</span>
-          </div>
-        `;
-        container.appendChild(item);
-        showToast(`Created "${plName}"`);
+      const customPlaylists = getStoredCustomPlaylists();
+      const nextIndex = Object.keys(customPlaylists).length + 1;
+      const plName = prompt("Enter Playlist Name:", `My Playlist #${nextIndex}`)?.trim();
+      if (!plName) return;
+
+      if (!customPlaylists[plName]) {
+        customPlaylists[plName] = [];
+        saveStoredCustomPlaylists(customPlaylists);
       }
+      
+      renderSidebarCustomPlaylists();
+      window.location.hash = `#playlist?id=${encodeURIComponent(plName)}`;
+      showToast(`Created "${plName}" 🎵`);
     });
   }
 
@@ -1400,7 +1898,8 @@ function initSearchPage() {
       song.title.toLowerCase().includes(query) ||
       song.artist.toLowerCase().includes(query) ||
       song.album.toLowerCase().includes(query) ||
-      song.category.toLowerCase().includes(query)
+      song.category.toLowerCase().includes(query) ||
+      (Array.isArray(song.tags) && song.tags.some(tag => tag.toLowerCase().includes(query)))
     );
 
     if (filtered.length === 0) {
@@ -1678,7 +2177,15 @@ function initPlaylistPage(playlistName = "Daily Mix") {
   headerTitle.textContent = playlistName;
 
   let filteredSongs = [...SONGS_DATA];
-  if (playlistName === 'Coding Beats' || playlistName === 'Chill Mix' || playlistName === 'Chill Evenings') {
+  const customPlaylists = getStoredCustomPlaylists();
+  if (customPlaylists[playlistName]) {
+    const ids = customPlaylists[playlistName];
+    filteredSongs = SONGS_DATA.filter(s => ids.includes(s.id));
+    if (filteredSongs.length === 0) {
+      // Default sample tracks for newly created custom playlists
+      filteredSongs = [SONGS_DATA[0], SONGS_DATA[1]];
+    }
+  } else if (playlistName === 'Coding Beats' || playlistName === 'Chill Mix' || playlistName === 'Chill Evenings') {
     filteredSongs = SONGS_DATA.filter(s => s.category === 'Pop' || s.category === 'Rock');
   } else if (playlistName === 'Workout Energy') {
     filteredSongs = SONGS_DATA.filter(s => s.category === 'Workout');

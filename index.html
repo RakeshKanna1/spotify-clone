@@ -350,7 +350,160 @@
               </article>
             </div>
           </section>
-        </main>
+        </div>
+
+        <!-- 2. SEARCH VIEW -->
+        <div id="search-view" class="spa-view" style="display: none;">
+          <h2 class="section-title" style="margin-bottom: 1.5rem;">Search & Explore</h2>
+          
+          <!-- Category Chips -->
+          <div class="search-chips-row">
+            <button class="search-chip active">All</button>
+            <button class="search-chip">Pop</button>
+            <button class="search-chip">Rock</button>
+            <button class="search-chip">Hip-Hop</button>
+            <button class="search-chip">Tamil</button>
+            <button class="search-chip">Hindi</button>
+            <button class="search-chip">Focus</button>
+            <button class="search-chip">Workout</button>
+            <button class="search-chip">Classical</button>
+          </div>
+
+          <!-- Trending Searches -->
+          <div id="trending-searches" style="margin-bottom: 2rem;">
+            <h3 style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Trending Searches</h3>
+            <div class="trending-list">
+              <span class="trending-item">The Weeknd</span>
+              <span class="trending-item">Anirudh</span>
+              <span class="trending-item">Arijit Singh</span>
+              <span class="trending-item">Eminem</span>
+              <span class="trending-item">A.R. Rahman</span>
+              <span class="trending-item">Billie Eilish</span>
+              <span class="trending-item">Taylor Swift</span>
+              <span class="trending-item">Leo</span>
+              <span class="trending-item">Chill</span>
+              <span class="trending-item">Gym</span>
+            </div>
+          </div>
+
+          <!-- Browse Categories Grid -->
+          <div class="browse-grid">
+            <div class="browse-card" data-category="Pop" style="background: linear-gradient(135deg, #e11d48, #be123c);">
+              <span>Pop</span>
+            </div>
+            <div class="browse-card" data-category="Rock" style="background: linear-gradient(135deg, #b91c1c, #991b1b);">
+              <span>Rock</span>
+            </div>
+            <div class="browse-card" data-category="Hip-Hop" style="background: linear-gradient(135deg, #d97706, #b45309);">
+              <span>Hip-Hop</span>
+            </div>
+            <div class="browse-card" data-category="Tamil" style="background: linear-gradient(135deg, #059669, #047857);">
+              <span>Tamil</span>
+            </div>
+            <div class="browse-card" data-category="Hindi" style="background: linear-gradient(135deg, #7c3aed, #6d28d9);">
+              <span>Hindi / Bollywood</span>
+            </div>
+            <div class="browse-card" data-category="Workout" style="background: linear-gradient(135deg, #ea580c, #c2410c);">
+              <span>Workout & Gym</span>
+            </div>
+            <div class="browse-card" data-category="Focus" style="background: linear-gradient(135deg, #0284c7, #0369a1);">
+              <span>Focus & Study</span>
+            </div>
+            <div class="browse-card" data-category="Classical" style="background: linear-gradient(135deg, #475569, #334155);">
+              <span>Classical</span>
+            </div>
+          </div>
+
+          <!-- Search Results Table -->
+          <div class="search-results-section" style="display: none;">
+            <h3 class="section-title" style="margin-bottom: 1rem;">Songs</h3>
+            <div class="results-table-header">
+              <span>#</span>
+              <span>Title</span>
+              <span>Album</span>
+              <span style="text-align: right;">Duration</span>
+            </div>
+            <div class="results-table-body"></div>
+          </div>
+        </div>
+
+        <!-- 3. PLAYLIST VIEW -->
+        <div id="playlist-view" class="spa-view" style="display: none;">
+          <div class="playlist-header-row">
+            <img id="playlist-header-img" class="playlist-header-cover" src="" alt="Playlist Cover" style="width: 200px; height: 200px; border-radius: var(--radius-sm); object-fit: cover; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+            <div class="playlist-header-info">
+              <span class="playlist-type-badge" style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Public Playlist</span>
+              <h1 id="playlist-header-title" class="playlist-header-name" style="font-size: 3rem; font-weight: 800; margin: 0.5rem 0;">Playlist Title</h1>
+              <div class="playlist-header-meta" style="color: var(--text-secondary); font-size: 0.9rem;">
+                <span class="playlist-creator-name" style="color: var(--text-main); font-weight: 600;">Spotify</span> • 
+                <span id="playlist-songs-count">0 songs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action bar -->
+          <div class="playlist-action-bar" style="display: flex; align-items: center; gap: 1.5rem; margin: 1.5rem 0;">
+            <button id="playlist-play-main" class="playlist-main-play-btn" style="width: 56px; height: 56px; border-radius: 50%; background: var(--accent); color: #000; border: none; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s;" aria-label="Play Playlist">▶</button>
+            <button id="playlist-shuffle-action" class="btn-utility" title="Shuffle" style="color: var(--text-secondary); cursor: pointer; background: transparent; border: none;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.2 0 2.3.6 3 1.7l1.1 1.6"/><path d="m15.4 12.8 1.2 1.7c.8 1.1 2 1.7 3.2 1.7H22"/><path d="m18 14 4 4-4 4"/></svg>
+            </button>
+            <button id="playlist-save-action" class="btn-utility" title="Save to Library" style="color: var(--text-secondary); cursor: pointer; background: transparent; border: none;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </button>
+          </div>
+
+          <!-- Tracks table -->
+          <div class="results-table-header">
+            <span>#</span>
+            <span>Title</span>
+            <span>Album</span>
+            <span style="text-align: right;">Duration</span>
+          </div>
+          <div id="playlist-tracks-table-body" class="results-table-body"></div>
+        </div>
+
+        <!-- 4. ARTIST VIEW -->
+        <div id="artist-view" class="spa-view" style="display: none;">
+          <div class="artist-banner" id="artist-banner-cover">
+            <div class="artist-banner-details">
+              <span class="artist-verified">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                Verified Artist
+              </span>
+              <h1 class="artist-name" id="artist-title-name">Artist Name</h1>
+              <span class="artist-listeners">0 monthly listeners</span>
+            </div>
+          </div>
+
+          <section>
+            <h3 class="section-title" style="margin-bottom: 1rem;">Popular</h3>
+            <div id="artist-popular-tracks-list" class="results-table-body"></div>
+          </section>
+
+          <div class="artist-about-section">
+            <h3 class="section-title" style="margin-bottom: 0.75rem;">About</h3>
+            <div class="artist-about-text">
+              <p>Artist biography...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. LIBRARY VIEW -->
+        <div id="library-view" class="spa-view" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <h2 class="section-title" style="margin-bottom: 0;">Your Library</h2>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <span id="library-count-label" style="font-size: 0.85rem; color: var(--text-secondary);">0 songs</span>
+              <select id="library-sort-select" style="background: #282828; color: var(--text-main); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 4px 8px; font-size: 0.85rem; cursor: pointer;">
+                <option value="recent">Recents</option>
+                <option value="alphabetical">Alphabetical</option>
+                <option value="artist">Artist</option>
+              </select>
+            </div>
+          </div>
+          <div class="music-grid" id="library-music-grid"></div>
+        </div>
+      </main>
     </div>
 
     <!-- Bottom fixed Music Player -->
